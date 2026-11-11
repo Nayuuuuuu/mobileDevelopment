@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
  */
 
 @Composable
-fun Page1(modifier: Modifier = Modifier) = Placeholder("Page 1", modifier)
+fun Page1(modifier: Modifier = Modifier) = Placeholder("Exercises", modifier)
 
 @Composable
-fun Page2(modifier: Modifier = Modifier) = Placeholder("Page 2", modifier)
+fun Page2(modifier: Modifier = Modifier) = Placeholder("Log", modifier)
 
 @Composable
-fun Page3(modifier: Modifier = Modifier) = Placeholder("Page 3", modifier)
+fun Page3(modifier: Modifier = Modifier) = Placeholder("Nearby", modifier)
 
 @Composable
 private fun Placeholder(label: String, modifier: Modifier = Modifier) {

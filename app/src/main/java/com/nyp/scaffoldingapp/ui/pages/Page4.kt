@@ -26,7 +26,7 @@ fun Page4(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Page 4", style = MaterialTheme.typography.headlineMedium)
+        Text("Progress", style = MaterialTheme.typography.headlineMedium)
         Spacer(Modifier.height(8.dp))
         Text(
             "Sample Content",
