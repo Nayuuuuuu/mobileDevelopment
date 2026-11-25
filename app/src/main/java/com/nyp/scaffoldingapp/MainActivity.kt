@@ -21,7 +21,9 @@ enum class Tab(val label: String, @DrawableRes val icon: Int) {
     PAGE1("Exercises", R.drawable.ic_home),
     PAGE2("Log", R.drawable.ic_email),
     PAGE3("Nearby", R.drawable.ic_list),
-    PAGE4("Progress", R.drawable.ic_star)
+    PAGE4("Progress", R.drawable.ic_star),
+
+    PAGE5("Profile", R.drawable.ic_list)
 }
 
 class MainActivity : ComponentActivity() {
@@ -71,6 +73,7 @@ fun AppScaffold() {
                 Tab.PAGE2 -> Page2()
                 Tab.PAGE3 -> Page3()
                 Tab.PAGE4 -> Page4()
+                Tab.PAGE5 -> Page5()
             }
         }
     }
