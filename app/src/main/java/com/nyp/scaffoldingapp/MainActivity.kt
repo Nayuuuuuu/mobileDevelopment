@@ -8,6 +8,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.nyp.scaffoldingapp.ui.pages.*
@@ -26,12 +27,33 @@ enum class Tab(val label: String, @DrawableRes val icon: Int) {
     PAGE5("Profile", R.drawable.ic_list)
 }
 
+enum class Screen { SPLASH, SIGN_IN, MAIN }
+
+@Composable
+fun AppRoot() {
+    var screen by rememberSaveable { mutableStateOf(Screen.SPLASH) }
+
+    when (screen) {
+        Screen.SPLASH -> SplashScreen(
+            onFinished = { isLoggedIn ->
+                screen = if (isLoggedIn) Screen.MAIN else Screen.SIGN_IN
+            }
+        )
+        Screen.SIGN_IN -> {
+            // Placeholder until we build it next
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Button(onClick = { screen = Screen.MAIN }) { Text("Temp: go to Main") }
+            }
+        }
+        Screen.MAIN -> AppScaffold()
+    }
+}
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ScaffoldingTheme {
-                AppScaffold()
+                AppRoot()
             }
         }
     }
