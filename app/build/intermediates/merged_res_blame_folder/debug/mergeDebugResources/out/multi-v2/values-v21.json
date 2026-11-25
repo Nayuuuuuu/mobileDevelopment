@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.nyp.scaffoldingapp-mergeDebugResources-45:/values-v21/values-v21.xml",
+            "outputFile": "com.nyp.scaffoldingapp-mergeDebugResources-46:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Rayes\\.gradle\\caches\\9.5.0\\transforms\\96017e4358adc92ef971e269bba7e1a2\\transformed\\core-1.16.0\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\delso\\.gradle\\caches\\9.5.0\\transforms\\d22880060a3154615d5710892cebe07c\\transformed\\core-1.16.0\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",

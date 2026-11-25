@@ -13,21 +13,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.nyp.scaffoldingapp.ui.pages.*
 import com.nyp.scaffoldingapp.ui.theme.ScaffoldingTheme
+import androidx.activity.compose.BackHandler
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 
 /**
  * The four bottom tabs. An enum keeps the list in one place — add a tab here
  * and the navigation bar updates itself.
  */
 enum class Tab(val label: String, @DrawableRes val icon: Int) {
-    PAGE1("Exercises", R.drawable.ic_home),
-    PAGE2("Log", R.drawable.ic_email),
-    PAGE3("Nearby", R.drawable.ic_list),
-    PAGE4("Progress", R.drawable.ic_star),
-
-    PAGE5("Profile", R.drawable.ic_list)
+    EXERCISES("Exercises", R.drawable.ic_home),
+    LOG("Log", R.drawable.ic_email),
+    NEARBY("Nearby", R.drawable.ic_list),
+    PROGRESS("Progress", R.drawable.ic_star),
+    PROFILE("Profile", R.drawable.ic_list)
 }
 
-enum class Screen { SPLASH, SIGN_IN, MAIN }
+enum class Screen { SPLASH, SIGN_IN, SIGN_UP, MAIN }
 
 @Composable
 fun AppRoot() {
@@ -39,11 +40,17 @@ fun AppRoot() {
                 screen = if (isLoggedIn) Screen.MAIN else Screen.SIGN_IN
             }
         )
-        Screen.SIGN_IN -> {
-            // Placeholder until we build it next
-            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Button(onClick = { screen = Screen.MAIN }) { Text("Temp: go to Main") }
-            }
+        Screen.SIGN_IN -> SignInScreen(
+            onSignIn = { _, _ -> screen = Screen.MAIN },          // TODO: real login check
+            onSignUp = { screen = Screen.SIGN_UP },
+            onContinueAsGuest = { screen = Screen.MAIN }
+        )
+        Screen.SIGN_UP -> {
+            BackHandler { screen = Screen.SIGN_IN }               // back goes to Sign in, not out of the app
+            SignUpScreen(
+                onSignUp = { _, _, _, _ -> screen = Screen.MAIN }, // TODO: save the account
+                onBackToSignIn = { screen = Screen.SIGN_IN }
+            )
         }
         Screen.MAIN -> AppScaffold()
     }
@@ -62,7 +69,8 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppScaffold() {
     // rememberSaveable, not remember: the selected tab must survive a rotation.
-    var selectedTab by rememberSaveable { mutableStateOf(Tab.PAGE1) }
+    var selectedTab by rememberSaveable { mutableStateOf(Tab.EXERCISES) }
+    val stateHolder = rememberSaveableStateHolder()
 
     Scaffold(
         bottomBar = {
@@ -90,12 +98,14 @@ fun AppScaffold() {
         // Use the padding Scaffold gives you, or your content hides behind
         // the navigation bar.
         Box(Modifier.padding(padding).fillMaxSize()) {
-            when (selectedTab) {
-                Tab.PAGE1 -> Page1()
-                Tab.PAGE2 -> Page2()
-                Tab.PAGE3 -> Page3()
-                Tab.PAGE4 -> Page4()
-                Tab.PAGE5 -> Page5()
+            stateHolder.SaveableStateProvider(selectedTab.name) {
+                when (selectedTab) {
+                    Tab.EXERCISES -> ExercisesScreen()
+                    Tab.LOG -> LogScreen()
+                    Tab.NEARBY -> NearbyScreen()
+                    Tab.PROGRESS -> ProgressScreen()
+                    Tab.PROFILE -> ProfileScreen()
+                }
             }
         }
     }
